@@ -1,7 +1,7 @@
 FROM python:3.9.5-buster
 
-WORKDIR /wbb
-RUN chmod 777 /DaphneRobot
+WORKDIR /Daphne_Robot
+RUN chmod 777 /Daphne_Robot
 RUN apt-get update -y
 RUN apt-get install -y wget curl bash git neofetch sudo software-properties-common ffmpeg
 
