@@ -21,5 +21,31 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-from .misc import paginate_modules  # noqa: F401
-from .read_lines import random_line  # noqa: F401
+
+
+async def json_object_prettify(objecc):
+    dicc = objecc.__dict__
+    output = ""
+    for key, value in dicc.items():
+        if (
+            key == "pinned_message"
+            or key == "photo"
+            or key == "_"
+            or key == "_client"
+        ):
+            continue
+        output += f"**{key}:** `{value}`\n"
+    return output
+
+
+async def json_prettify(data):
+    output = ""
+    try:
+        for key, value in data.items():
+            output += f"**{str(key).capitalize()}:** `{value}`\n"
+    except Exception:
+        for datas in data:
+            for key, value in datas.items():
+                output += f"**{str(key).capitalize()}:** `{value}`\n"
+            output += "------------------------\n"
+    return output
