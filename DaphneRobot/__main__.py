@@ -1,7 +1,7 @@
 """
 MIT License
 
-
+Copyright (c) 2021 TheHamkerCat
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,8 +29,8 @@ import uvloop
 from pyrogram import filters, idle
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-from DaphneRobot import (BOT_NAME, BOT_USERNAME, USERBOT_NAME, aiohttpsession,
-                 app)
+from wbb import (BOT_NAME, BOT_USERNAME, USERBOT_NAME, aiohttpsession,
+                 app, app2)
 from DaphneRobot.modules import ALL_MODULES
 from DaphneRobot.modules.sudoers import bot_sys_stats
 from DaphneRobot.utils import paginate_modules
@@ -42,6 +42,10 @@ HELPABLE = {}
 
 
 async def start_bot():
+    print("[INFO]: STARTING BOT CLIENT")
+    await app.start()
+    print("[INFO]: STARTING USERBOT CLIENT")
+    await app2.start()
     restart_data = await clean_restart_stage()
     if restart_data:
         print("[INFO]: SENDING RESTART STATUS")
@@ -55,7 +59,7 @@ async def start_bot():
             pass
     for module in ALL_MODULES:
         imported_module = importlib.import_module(
-            "wbb.modules." + module
+            "DaphneRobot.modules." + module
         )
         if (
             hasattr(imported_module, "__MODULE__")
@@ -82,7 +86,7 @@ async def start_bot():
         "+===============================================================+"
     )
     print(
-        "|                              DaphneRobot                             |"
+        "|                              WBB                              |"
     )
     print(
         "+===============+===============+===============+===============+"
@@ -105,21 +109,24 @@ async def help_command(_, message):
             [
                 [
                     InlineKeyboardButton(
-                        text="Help & Command",
+                        text="Help ",
                         url=f"t.me/{BOT_USERNAME}?start=help",
                     ),
                     InlineKeyboardButton(
-                        text="💾 Repo🛠",
+                        text="Repo",
                         url="https://github.com/HuntingBots/DaphneRobot",
                     ),
                 ],
                 [
                     InlineKeyboardButton(
-                        text="Owner 🤴",url="t.me/The_Ghost_Hunter"
-                        
+                        text="System Stats",
+                        callback_data="stats_callback",
                     ),
                     InlineKeyboardButton(
-                        text="Support 👥",url="t.me/WBBSupport"
+                        text="Owner", url="t.me/The_Ghost_Hunter"
+                    ),
+                    InlineKeyboardButton(
+                        text="Support ", url="t.me/https://t.me/helpcenterbot1"
                     ),
                 ],
             ]
@@ -134,12 +141,18 @@ async def help_command(_, message):
                 InlineKeyboardButton(
                     text="Commands ", callback_data="bot_commands"
                 ),
-                
+                InlineKeyboardButton(
+                    text="Repo ",
+                    url="https://github.com/HuntingBots/DaphneRobot",
+                ),
             ],
             [
                 InlineKeyboardButton(
-                    text="System Stats",
+                    text="System Stats ",
                     callback_data="stats_callback",
+                ),
+                InlineKeyboardButton(
+                    text="Support ", url="t.me/helpcenterbot1"
                 ),
             ],
             [
